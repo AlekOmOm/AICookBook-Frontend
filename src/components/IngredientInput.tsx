@@ -10,6 +10,7 @@ function IngredientInput({ onAdd }: IngredientInputProps) {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [unit, setUnit] = useState('');
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

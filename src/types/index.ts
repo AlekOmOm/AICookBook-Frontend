@@ -19,23 +19,33 @@ export type RecipeType = 'bestUse' | 'goodAlternatives';
  */
 
 
+
 export interface Recipe {
-    id: string;
-    name: string;
-    instructions: string;
-    tags: string;
-    servings: number;
-    prepTime: number;
-    cookTime: number;
-    totalTime: number;
-    ingredients: Ingredient[];
+  id: number;
+  name: string;
+  instructions: string;
+  tags: string;
+  servings: number;
+  prepTime: number;
+  cookTime: number;
+  totalTime: number;
+  ingredients: Ingredient[];
 }
 
+/*
+// new fields:
+    isFavorite: boolean;
+    imageUrl: string;
+    matchPercentage: number; // % of ingredients in pantry
+*/
+
 export interface Ingredient {
-    id: string;
-    name: string;
-    amount: number;
-    unit: string;
+  id: number;
+  name: string;
+  quantity: string;
+
+  // field for UI, 
+  present: boolean; 
 }
 
 export interface Filter {
@@ -45,3 +55,23 @@ export interface Filter {
     maxMinutes?: number;
   };
 }
+
+
+
+/*
+    private long id;
+    private String name;
+    private String instructions;
+    private String tags;
+    private int servings;
+    private int prepTime;
+    private int cookTime;
+    private int totalTime;
+*/
+
+/* 
+private long id;
+private String name;
+private int amount;
+private String unit;
+*/
