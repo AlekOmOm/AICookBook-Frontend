@@ -16,9 +16,10 @@ function IngredientInput({ onAdd }: IngredientInputProps) {
     e.preventDefault();
     if (name.trim()) {
       onAdd({
+        
         name: name.trim(),
-        amount,
-        unit,
+        amount: amount.trim(),
+        unit: unit.trim(),
         present: true,
       });
       setName('');

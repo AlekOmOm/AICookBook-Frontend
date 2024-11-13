@@ -40,12 +40,11 @@ export interface Recipe {
 */
 
 export interface Ingredient {
-  id: number;
+  id: string;
   name: string;
-  quantity: string;
-
-  // field for UI, 
-  present: boolean; 
+  amount: string;
+  unit: string;
+  present: boolean; // ui exclusive field
 }
 
 export interface Filter {

@@ -1,36 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Clock, Heart, Check, AlertCircle } from 'lucide-react';
 import type { Recipe, Ingredient } from '../types';
+import { getRecipes } from '../services/apiBackend';
 
 function RecipeDetail() {
   const { id } = useParams();
 
-  // Mock data - replace with API call
-  const recipe: Recipe = {
-    id: '1',
-    name: 'Vegetarian Pasta',
-    type: 'bestUse',
-    workTime: 30,
-    ingredients: [
-      { id: '1', name: 'Pasta', amount: '500', unit: 'g', present: true },
-      { id: '2', name: 'Tomatoes', amount: '4', unit: 'pieces', present: false },
-      { id: '3', name: 'Basil', amount: '1', unit: 'bunch', present: true },
-      { id: '4', name: 'Garlic', amount: '3', unit: 'cloves', present: false },
-    ],
-    instructions: [
-      'Boil water in a large pot',
-      'Add pasta and cook until al dente',
-      'In a separate pan, sauté vegetables',
-      'Combine pasta with the sauce',
-      'Garnish with fresh basil',
-    ],
-    imageUrl: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9',
-    isFavorite: false,
-    matchPercentage: 75,
-  };
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
 
-  // Sort ingredients into missing and available
+  useEffect(() => {
+    getRecipes().then((recipes) => {
+      setRecipe(recipes.find((recipe: Recipe) => recipe.id === Number(id)) || null)
+    });
+    
+  }, []);
+
+  if (!recipe) {
+    return <div>Loading...</div>;
+  }
+
+  const instructionsArray = recipe.instructions.split('.').filter(instruction => instruction.trim() !== '');
+
   const sortedIngredients = {
     missing: recipe.ingredients.filter(ing => !ing.present),
     available: recipe.ingredients.filter(ing => ing.present),
@@ -58,7 +49,7 @@ function RecipeDetail() {
               <h1 className="text-3xl font-bold text-gray-900">{recipe.name}</h1>
               <div className="mt-2 flex items-center text-sm text-gray-500">
                 <Clock className="h-4 w-4 mr-1" />
-                {recipe.workTime} minutes
+                {recipe.totalTime} minutes
               </div>
             </div>
             <button className="text-gray-400 hover:text-red-500">
@@ -98,10 +89,10 @@ function RecipeDetail() {
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Instructions</h2>
               <ol className="space-y-4">
-                {recipe.instructions.map((instruction, index) => (
+                {instructionsArray.map((instruction, index) => (
                   <li key={index} className="flex">
                     <span className="font-medium text-indigo-600 mr-4">{index + 1}.</span>
-                    <span className="text-gray-700">{instruction}</span>
+                    <span className="text-gray-700">{instruction.trim()}</span>
                   </li>
                 ))}
               </ol>
