@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Clock, Heart } from 'lucide-react';
-import type { Recipe, Filter } from '../types';
+import type { Recipe } from '../types';
 import { getRecipes } from '../services/apiBackend';
 import { genNewRecipes } from '../services/apiWebClient';
 
@@ -9,10 +9,6 @@ function Recipes() {
   const navigate = useNavigate();
   const location = useLocation();
   const isExploreMode = location.state?.mode === 'explore';
-  const [filter, setFilter] = useState<Filter>({
-    eater: 'default',
-    workTime: { fast: false },
-  });
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -20,12 +16,60 @@ function Recipes() {
   useEffect(() => {
     async function fetchRecipes() {
       try {
-        const data: Recipe[] = isExploreMode 
-          ? await genNewRecipes()
-          : await getRecipes();
+        const data = isExploreMode 
+        ? await genNewRecipes()
+        : await getRecipes();
         
-        setRecipes(data);
+        console.log('Fetched recipes:', data); // Log the fetched data
+
+        // data to recipes
+
+        interface Ingredient {
+          name: string;
+          amount: number;
+          unit: string;
+        }
+
+        interface FetchedRecipe {
+          id: number;
+          name: string;
+          instructions: string;
+          tags: string;
+          servings: number;
+          prepTime: number;
+          cookTime: number;
+          totalTime: number;
+          ingredients: Ingredient[];
+        }
+
+        const recipes: Recipe[] = (data as FetchedRecipe[]).map((recipe: FetchedRecipe) => ({
+          id: recipe.id,
+          name: recipe.name,
+          instructions: recipe.instructions,
+          tags: recipe.tags,
+          servings: recipe.servings,
+          prepTime: recipe.prepTime,
+          cookTime: recipe.cookTime,
+          totalTime: recipe.totalTime,
+          ingredients: recipe.ingredients,
+        }));
+
+
+          /*
+          id: number;
+            name: string;
+            instructions: string;
+            tags: string;
+            servings: number;
+            prepTime: number;
+            cookTime: number;
+            totalTime: number;
+            ingredients: Ingredient[];
+          */
+
+        setRecipes(recipes);
       } catch (err: unknown) {
+        console.error('Error fetching recipes:', err);
         setError('Failed to fetch recipes');
       }
     }
@@ -39,32 +83,6 @@ function Recipes() {
           <h2 className="text-xl font-semibold text-gray-900">
             {isExploreMode ? 'Discover New Recipes' : 'Your Saved Recipes'}
           </h2>
-        </div>
-        <div className="flex flex-wrap gap-4">
-          <select
-            value={filter.eater}
-            onChange={(e) => setFilter({ ...filter, eater: e.target.value as Filter['eater'] })}
-            className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="default">All Recipes</option>
-            <option value="vegetarian">Vegetarian</option>
-            <option value="vegan">Vegan</option>
-          </select>
-
-          <label className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              checked={filter.workTime.fast}
-              onChange={(e) =>
-                setFilter({
-                  ...filter,
-                  workTime: { ...filter.workTime, fast: e.target.checked },
-                })
-              }
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-            />
-            <span className="text-sm text-gray-700">Quick recipes only</span>
-          </label>
         </div>
       </div>
 

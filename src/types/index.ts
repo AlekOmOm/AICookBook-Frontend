@@ -40,22 +40,17 @@ export interface Recipe {
 */
 
 export interface Ingredient {
-  id: string;
   name: string;
-  amount: string;
+  amount: number;
   unit: string;
-  present: boolean; // ui exclusive field
 }
 
 export interface Filter {
-  eater: 'default' | 'vegetarian' | 'vegan';
+  eater: string;
   workTime: {
     fast: boolean;
-    maxMinutes?: number;
   };
 }
-
-
 
 /*
     private long id;
