@@ -88,8 +88,13 @@ export function convertDataToRecipeList(recipes: Recipe[]) {
   return recipes;
 }
 
-export async function convertDataToIngredients(data: any): Promise<Ingredient[]> {
-  const ingredients: Ingredient[] = (data as any[]).map((ingredient: any) => ({
+export async function convertDataToIngredients(data: Ingredient[]): Promise<Ingredient[]> {
+
+  if (data === null || !Array.isArray(data)) {
+    return [];
+  }
+
+  const ingredients: Ingredient[] = data.map((ingredient: Ingredient) => ({
     id: ingredient.id,
     name: ingredient.name,
     amount: ingredient.amount,

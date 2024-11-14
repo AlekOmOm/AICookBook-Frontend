@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import type { Ingredient } from '../types';
 
 interface IngredientInputProps {
-  onAdd: (ingredient: Omit<Ingredient, 'id'>) => void;
+  onAdd: (ingredient: Ingredient) => void;
 }
 
 function IngredientInput({ onAdd }: IngredientInputProps) {
@@ -16,11 +16,10 @@ function IngredientInput({ onAdd }: IngredientInputProps) {
     e.preventDefault();
     if (name.trim()) {
       onAdd({
-        
-        name: name.trim(),
-        amount: amount.trim(),
-        unit: unit.trim(),
-        present: true,
+        id: 0,
+        name: name,
+        amount: parseFloat(amount),
+        unit: unit
       });
       setName('');
       setAmount('');

@@ -4,8 +4,8 @@ import type { Ingredient } from '../types';
 
 interface IngredientListProps {
   ingredients: Ingredient[];
-  onDelete: (id: string) => void;
-  onToggle: (id: string) => void;
+  onDelete: (id: number) => void;
+  onToggle: (id: number) => void;
 }
 
 function IngredientList({ ingredients, onDelete, onToggle }: IngredientListProps) {
@@ -18,7 +18,7 @@ function IngredientList({ ingredients, onDelete, onToggle }: IngredientListProps
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  checked={ingredient.present}
+                  
                   onChange={() => onToggle(ingredient.id)}
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />

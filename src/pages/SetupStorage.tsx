@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import IngredientInput from '../components/IngredientInput';
@@ -38,18 +38,14 @@ function Setup() {
     setIngredients(ingredients.filter((ingredient) => ingredient.id !== id));
   };
 
+  
   const handleToggleIngredient = (id: number) => {
-    setIngredients(
-      ingredients.map((ingredient) =>
-        ingredient.id === id
-          ? { ...ingredient, present: !ingredient.present }
-          : ingredient
-      )
-    );
+    console.log('Toggled ingredient:', id);
   };
 
   const handleSave = () => {
     // TODO: Save ingredients to backend
+    
     navigate('/home');
   };
 
@@ -80,6 +76,4 @@ function Setup() {
 
 export default Setup;
 
-function useEffect(arg0: () => void, arg1: never[]) {
-  throw new Error('Function not implemented.');
-}
+

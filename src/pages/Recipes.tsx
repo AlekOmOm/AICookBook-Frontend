@@ -11,7 +11,6 @@ function Recipes() {
   const navigate = useNavigate();
   const location = useLocation();
   const isExploreMode = location.state?.mode === 'explore';
-
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +31,7 @@ function Recipes() {
   }, [isExploreMode]);
 
 
-  
+
   return (
     <div className="space-y-6">
       <div className="bg-white shadow-sm rounded-lg p-4">
