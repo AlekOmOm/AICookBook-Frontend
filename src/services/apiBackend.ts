@@ -1,14 +1,23 @@
 import { Recipe } from "../types";
 import { Ingredient } from "../types";
+import fetch from 'node-fetch';
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://localhost:8080/api";
 
 // CRUD Recipe and Ingredient
 
 export async function getRecipes() {
   const res = await fetch(`${BASE_URL}/recipes`);
   console.log(`Status Code: ${res.status}`);
-  return await res.json();
+
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  console.log(data);
+  
+  return data;
 }
 
 export async function addRecipe(recipe: Recipe) {

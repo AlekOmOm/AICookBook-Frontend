@@ -1,5 +1,5 @@
-import Recipes from "../pages/Recipes";
-import { getRecipes } from "../services/apiBackend";
+import Recipes from "../../pages/Recipes";
+import { getRecipes } from "../../services/apiBackend";
 
 module.exports = {
   preset: 'ts-jest',
@@ -36,6 +36,4 @@ describe('getRecipes', () => {
 
     await expect(getRecipes()).rejects.toThrow('Failed to fetch');
   });
-
-  console.log('getRecipes tests passed!'+ Recipes);
 });
