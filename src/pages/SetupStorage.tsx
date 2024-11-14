@@ -4,20 +4,41 @@ import { v4 as uuidv4 } from 'uuid';
 import IngredientInput from '../components/IngredientInput';
 import IngredientList from '../components/IngredientList';
 import type { Ingredient } from '../types';
+import {convertDataToIngredients} from '../types/index'
+import { getIngredients } from '../services/apiBackend';
 
 function Setup() {
   const navigate = useNavigate();
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleAddIngredient = (newIngredient: Omit<Ingredient, 'id'>) => {
-    setIngredients([...ingredients, { ...newIngredient, id: uuidv4() }]);
+  useEffect(() => {
+    async function fetchRecipes() {
+      try {
+        const data = getIngredients();
+
+        console.log('Fetched ingredients:', data); // Log the fetched data
+
+        setIngredients(await convertDataToIngredients(data));
+        
+      } catch (err: unknown) {
+        console.error('Error fetching ingredients for storage:', err);
+        setError('Failed to fetch ingredients');
+      }      
+    }
+    
+    fetchRecipes();
+  }, []);
+
+  const handleAddIngredient = (newIngredient: Ingredient) => {
+    setIngredients([...ingredients, { ...newIngredient }]);
   };
 
-  const handleDeleteIngredient = (id: string) => {
+  const handleDeleteIngredient = (id: number) => {
     setIngredients(ingredients.filter((ingredient) => ingredient.id !== id));
   };
 
-  const handleToggleIngredient = (id: string) => {
+  const handleToggleIngredient = (id: number) => {
     setIngredients(
       ingredients.map((ingredient) =>
         ingredient.id === id
@@ -36,6 +57,8 @@ function Setup() {
     <div className="max-w-3xl mx-auto">
       <div className="bg-white shadow-sm rounded-lg p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Manage Your Ingredients</h2>
+        
+        {error && <div className="text-red-500">{error}</div>}
         <IngredientInput onAdd={handleAddIngredient} />
         <IngredientList
           ingredients={ingredients}
@@ -56,3 +79,7 @@ function Setup() {
 }
 
 export default Setup;
+
+function useEffect(arg0: () => void, arg1: never[]) {
+  throw new Error('Function not implemented.');
+}

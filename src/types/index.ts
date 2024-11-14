@@ -40,6 +40,7 @@ export interface Recipe {
 */
 
 export interface Ingredient {
+  id: number;
   name: string;
   amount: number;
   unit: string;
@@ -69,3 +70,31 @@ private String name;
 private int amount;
 private String unit;
 */
+
+export function convertDataToRecipeList(recipes: Recipe[]) {
+  
+  recipes.map((recipe: Recipe) => ({
+    id: recipe.id,
+    name: recipe.name,
+    instructions: recipe.instructions,
+    tags: recipe.tags,
+    servings: recipe.servings,
+    prepTime: recipe.prepTime,
+    cookTime: recipe.cookTime,
+    totalTime: recipe.totalTime,
+    ingredients: recipe.ingredients,
+  }));
+
+  return recipes;
+}
+
+export async function convertDataToIngredients(data: any): Promise<Ingredient[]> {
+  const ingredients: Ingredient[] = (data as any[]).map((ingredient: any) => ({
+    id: ingredient.id,
+    name: ingredient.name,
+    amount: ingredient.amount,
+    unit: ingredient.unit,
+  }));
+
+  return ingredients;
+}
