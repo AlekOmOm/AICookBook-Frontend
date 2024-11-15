@@ -13,9 +13,9 @@ function Setup() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchRecipes() {
+    async function fetchIngredients() {
       try {
-        const data = getIngredients();
+        const data = await getIngredients();
 
         console.log('Fetched ingredients:', data); // Log the fetched data
 
@@ -27,7 +27,7 @@ function Setup() {
       }      
     }
     
-    fetchRecipes();
+    fetchIngredients();
   }, []);
 
   const handleAddIngredient = (newIngredient: Ingredient) => {

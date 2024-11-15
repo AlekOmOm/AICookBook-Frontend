@@ -88,7 +88,7 @@ export function convertDataToRecipeList(recipes: Recipe[]) {
   return recipes;
 }
 
-export async function convertDataToIngredients(data: Ingredient[]): Promise<Ingredient[]> {
+export async function convertDataToIngredients(data: Ingredient[]) {
 
   if (data === null || !Array.isArray(data)) {
     return [];
