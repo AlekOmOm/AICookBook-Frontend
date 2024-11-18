@@ -72,7 +72,25 @@ private String unit;
 */
 
 export function convertDataToRecipeList(recipes: Recipe[]) {
-  
+
+  console.log(recipes);
+  if (recipes === null || !Array.isArray(recipes)) {
+    return [];
+  }
+
+    const recipesList: Recipe[] = recipes.map((recipe: Recipe) => ({
+        id: recipe.id,
+        name: recipe.name,
+        instructions: recipe.instructions,
+        tags: recipe.tags,
+        servings: recipe.servings,
+        prepTime: recipe.prepTime,
+        cookTime: recipe.cookTime,
+        totalTime: recipe.totalTime,
+        ingredients: recipe.ingredients,
+    }));
+
+  /*
   recipes.map((recipe: Recipe) => ({
     id: recipe.id,
     name: recipe.name,
@@ -85,7 +103,9 @@ export function convertDataToRecipeList(recipes: Recipe[]) {
     ingredients: recipe.ingredients,
   }));
 
-  return recipes;
+   */
+
+  return recipesList;
 }
 
 export async function convertDataToIngredients(data: Ingredient[]) {

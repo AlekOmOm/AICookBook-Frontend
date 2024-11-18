@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Recipe } from '../types';
 import { convertDataToRecipeList } from '../types/index';
@@ -17,18 +17,21 @@ function Recipes() {
   useEffect(() => {
     async function fetchRecipes() {
       try {
-        const data = isExploreMode 
-        ? await genNewRecipes()
-        : await getRecipes();
-        
+        const data = isExploreMode
+            ? await genNewRecipes()
+            : await getRecipes();
+
         setRecipes(convertDataToRecipeList(data as Recipe[]));
       } catch (err: unknown) {
         console.error('Error fetching recipes:', err);
         setError('Failed to fetch recipes');
       }
     }
-    fetchRecipes();
-  }, [isExploreMode]);
+
+    if (isExploreMode) {
+      fetchRecipes();
+    }
+  }, []);
 
 
 
