@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Compass, Book, Settings } from 'lucide-react';
 import type { Intention } from '../types';

@@ -28,12 +28,8 @@ function Recipes() {
       }
     }
 
-    if (isExploreMode) {
-      fetchRecipes();
-    }
-  }, []);
-
-
+    fetchRecipes();
+  }, [isExploreMode]);
 
   return (
     <div className="space-y-6">
