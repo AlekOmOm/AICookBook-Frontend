@@ -3,6 +3,44 @@
 
 Frontend for AICookBook-Application
 
+### Setup and Run the Application
+
+#### Repos .git links
+
+Three services
+- Frontend:
+	- [GitHub - AlekOmOm/AICookBook-Frontend: Frontend for AICookBook-Application](https://github.com/AlekOmOm/AICookBook-Frontend.git)
+- APIClient:
+	- [GitHub - AlekOmOm/AICookBook-APIClient](https://github.com/AlekOmOm/AICookBook-APIClient.git)
+- Backend:
+	- [GitHub - AlekOmOm/AICookBook-Backend](https://github.com/AlekOmOm/AICookBook-Backend.git)
+
+#### Steps to Run the Application:
+
+1. Backend
+	- Port = 8080
+	  steps:
+	1. DB create Schema:
+		- aicookbook_db
+	2. DB Env variables
+		- DB_LOCALHOST = localhost
+		- DB_PORT = 3306
+		- DB_USERNAME = < your_db_username >
+		- DB_PASSWORD = < your_db_password >
+
+2. Frontend
+	1. run with:
+		- `npm install`
+		- `npm run dev`
+
+3. APIClient:
+	- Port = 8081
+	1. Env variables
+		1. Create .env file
+		   add in .env:  `API_KEY= <your-key>`
+
+
+
   
 ### Project Overview: AI-Enhanced Cookbook Application
 
